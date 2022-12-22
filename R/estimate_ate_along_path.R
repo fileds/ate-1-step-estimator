@@ -20,7 +20,9 @@ estimate_ate_along_path <- function(sample, dgps) {
     # This is the hairy part. The estimator is calculated along the path 
     # parametrized by epsilon. This calculation is split up in the following steps
     # TODO: Insert latex code for the steps.
-    i_1 <- (1 - eps)^2 * integrate(function(t) m1(t) - m0(t), -6, 6 )$value / 12
+    # TODO: THink about integration limits.
+    i_1 <- (1 - eps)^2 * integrate(function(t) m1(t) - m0(t), -6, 6)$value / 12
+    #i_1 <- (1 - eps)^2 * integrate(function(t) m1(t) - m0(t), min(x), max(x))$value / 12
     
     # Kernel estimation may result in failed integration. Catching error and 
     # increasing tolerance.

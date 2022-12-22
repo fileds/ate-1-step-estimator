@@ -1,6 +1,5 @@
 library(dplyr)
 options(dplyr.summarise.inform = FALSE)
-library(latex2exp)
 library(ggplot2)
 library(ggrepel)
 
@@ -47,7 +46,7 @@ data_plot <- function(sample, dgps, input)
   lshp <- list(
     "True" = "solid",
     "Linear" = "dashed",
-    "Quadratic" = "dotted",
+    "Quadratic" = "longdash",
     "Kernel" = "dotdash")
   
   # Sample data frame
@@ -69,7 +68,7 @@ data_plot <- function(sample, dgps, input)
     geom_line(
       data = df_dgps,
       mapping = aes(x = x, y = y, linetype = model, col = tr), 
-      linewidth = 2,
+      linewidth = 1.5,
       alpha = 0.8) + 
     scale_color_manual(name = "Treatment", 
                        values = pal) +
@@ -88,7 +87,7 @@ if_plot <- function(estimators, input)
   # Color palette
   pal <- list(
     "Linear" = tableau20[1],
-    "Kernel" = tableau20[16],
+    "Kernel" = tableau20[14],
     "Quadratic" = tableau20[3])
   
   # Filter checked model types
@@ -136,7 +135,7 @@ if_plot <- function(estimators, input)
     scale_color_manual(name = "Model", 
                        values = unlist(pal[unique(df$model)])) +
     scale_linetype_manual("Estimator", values=c("dashed", "solid", "solid")) +
-    xlab(TeX("$P(\\epsilon)$")) +
+    xlab("Path") +
     ylab("ATE") +
     theme(
       text = element_text(size = 18)

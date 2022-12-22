@@ -25,7 +25,8 @@ body <- dashboardBody(
                        "combination between the two. The empirical estimate ",
                        "is based on model assumption and the 1-step estimator ",
                        "corrects the bias introduced by the ",
-                       "model assumption asymptotically.")
+                       "model assumption asymptotically. Note: The true ATE ",
+                       "is calculated on the covariate range, [-6, 6].")
                ),
            ),
                
@@ -42,8 +43,8 @@ body <- dashboardBody(
     ),
     column(width = 3,
            box(width = NULL, status = "warning", title = "Generate Sample",
-               sliderInput("sampleSize", "Sample size", min = 10, max = 1000, 
-                       value = 40, step = 10),
+               sliderInput("sampleSize", "Sample size", min = 40, max = 1000, 
+                       value = 100, step = 10),
                
                hr(),
                
@@ -52,10 +53,10 @@ body <- dashboardBody(
            ),
            box(width = NULL, status = "warning", title = "Data Generating Process",
                radioButtons('dgpType', 'DGP Type', 
-                            choiceNames = c("Linear with different intercept",
-                                            "Linear with different slope",
-                                            "Constant",
-                                            "Quadratic polynomial"),
+                            choiceNames = c("Linear",
+                                            "Quadratic",
+                                            "2nd deg. polynomial",
+                                            "3rd deg. polynomial"),
                             choiceValues = c(1, 2, 3, 4),
                             selected = 1, 
                             inline = FALSE),
@@ -68,11 +69,11 @@ body <- dashboardBody(
                
                hr(),
                
-               sliderInput("varianceTreated", "Variance of error of M1", 
-                           min = 0.1, max = 10, value = 1, step = 0.1),
-               
                sliderInput("varianceControl", "Variance of error of M0", 
-                           min = 0.1, max = 10, value = 1, step = 0.1),
+                           min = 0.1, max = 1, value = 0.5, step = 0.1),
+               
+               sliderInput("varianceTreated", "Variance of error of M1", 
+                           min = 0.1, max = 1, value = 0.5, step = 0.1),
                p(
                  class = "text-muted",
                  paste("Increase or decrease the variance in the treated and ",
@@ -98,7 +99,7 @@ body <- dashboardBody(
                hr(),
                
                sliderInput("kernelBw", "Kernel Bandwidth", 
-                           min = 0.1, max = 12, value = 2, step = 0.1),
+                           min = 0.1, max = 24, value = 2, step = 0.1),
                
                p(
                  class = "text-muted",
@@ -107,12 +108,7 @@ body <- dashboardBody(
                ),
                
                actionButton(inputId = "updateBandwidth", 
-                            label = "Update Bandwidth"),
-               
-               p(
-                 class = "text-muted",
-                 paste("Note: requires a generated sample.")
-               ),
+                            label = "Update Bandwidth")
                
            )
     )
@@ -123,45 +119,4 @@ dashboardPage(
   header,
   dashboardSidebar(disable = T),
   body
-#  tags$head(tags$style(HTML('
-#        /* logo */
-#        .skin-blue .main-header .logo {
-#                              background-color: #253B52;
-#                              }
-#
-#        /* logo when hovered */
-#        .skin-blue .main-header .logo:hover {
-#                              background-color: #2A4765;
-#                              }
-#
-#        /* navbar (rest of the header) */
-#        .skin-blue .main-header .navbar {
-#                              background-color: #2A4765;
-#                              }        
-#
-#        /* main sidebar */
-#        .skin-blue .main-sidebar {
-#                              background-color: #65718B;
-#                              }
-#
-#        /* active selected tab in the sidebarmenu */
-#        .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
-#                              background-color: #ff0000;
-#                              }
-#
-#        /* other links in the sidebarmenu */
-#        .skin-blue .main-sidebar .sidebar .sidebar-menu a{
-#                              background-color: #00ff00;
-#                              color: #000000;
-#                              }
-#
-#        /* other links in the sidebarmenu when hovered */
-#         .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
-#                              background-color: #d67236;
-#                              }
-#        /* toggle button when hovered  */                    
-#         .skin-blue .main-header .navbar .sidebar-toggle:hover{
-#                              background-color: #d67236;
-#                              }
-#                              ')))
 )

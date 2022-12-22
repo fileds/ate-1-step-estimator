@@ -10,21 +10,22 @@ define_dgp <- function(input)
   variance_control <- force(input$varianceControl)
   
   # Define density
+  # TODO: Change dgp type to strings.
   density_ = switch (dgp_type,
-                     '1' = list(m0 = function(x){ return(1.5 * x + 1) },
-                                m1 = function(x){ return(1.5 * x + 3) },
+                     '1' = list(m0 = function(x){ return(x / 3 - 1) },
+                                m1 = function(x){ return(x / 3 + 1) },
                                 p =  function(x){ return(1 / (1 + exp(.2 * x)) ) }),
                      
-                     '2' = list(m0 = function(x){ return(3 * x + 1) },
-                                m1 = function(x){ return(1.5 * x + 3) },
+                     '2' = list(m0 = function(x){ return(-x^2 / 18 - 1) },
+                                m1 = function(x){ return(x^2 / 18 + 1) },
                                 p =  function(x){ return(1 / (1 + exp(.2 * x)) ) }),
                      
-                     '3' = list(m0 = Vectorize(function(x){ return(1) }),
-                                m1 = Vectorize(function(x){ return(3) }),
+                     '3' = list(m0 = function(x){ return(-(x-2)^2 / 24 - 1) },
+                                m1 = function(x){ return((x+3)^2 / 36 + 1) },
                                 p =  function(x){ return(1 / (1 + exp(.2 * x)) ) }),
                      
-                     '4' = list(m0 = function(x){ return(x^2 - 6) },
-                                m1 = function(x){ return(-x^2 + 6) },
+                     '4' = list(m0 = function(x){ return(-(x+2)^3 / 288 - 1) },
+                                m1 = function(x){ return((x-3)^3 / 378 + 1) },
                                 p =  function(x){ return(1 / (1 + exp(.2 * x)) ) }))
   
   random_generator <- function(n)
