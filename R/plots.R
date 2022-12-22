@@ -23,7 +23,7 @@ tableau20 <- c('#4E79A7', # Blue
                '#9D7660', # Brown
                '#D7B5A6') # Tan)
                
-alpha_f <- function(n, n_max = 1000, alpha_min = 0.1, alpha_max = 1)
+alpha_f <- function(n, n_max = 1000, alpha_min = 0.15, alpha_max = 1)
 {
   a <- (log(n_max) - log(n)) / log(n_max) + alpha_min
   if (a > alpha_max) a <- alpha_max
@@ -70,7 +70,7 @@ data_plot <- function(sample, dgps, input)
       data = df_dgps,
       mapping = aes(x = x, y = y, linetype = model, col = tr), 
       linewidth = 2,
-      alpha = 0.7) + 
+      alpha = 0.8) + 
     scale_color_manual(name = "Treatment", 
                        values = pal) +
     scale_shape_discrete(name = "Treatment") + 

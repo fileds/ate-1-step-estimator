@@ -57,7 +57,7 @@ server <- function(input, output) {
   })
   
   # Update model
-  observeEvent(input$updateModel, {
+  observeEvent(input$updateBandwidth, {
     req(sample$df)
     showModal(modalDialog(
       "Calculating ATE and influence functions...", 

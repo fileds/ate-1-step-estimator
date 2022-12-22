@@ -106,10 +106,8 @@ body <- dashboardBody(
                        "Has no effect on 'Linear' or 'Quadratic'.")
                ),
                
-               hr(),
-               
-               actionButton(inputId = "updateModel", 
-                            label = "Update Model"),
+               actionButton(inputId = "updateBandwidth", 
+                            label = "Update Bandwidth"),
                
                p(
                  class = "text-muted",
