@@ -17,15 +17,15 @@ body <- dashboardBody(
                plotOutput("ifPlot"),
                p(
                  class = "text-muted",
-                 paste("Figure showing the ATE as a function of the ",
-                       "parametrized path (solid), the 1-step estimator ",
-                       "(dashed), and the empirical estimate (rightmost ",
-                       "point(s)). The path is a path the DGP space ",
-                       "from the empirical DGP to the true DGP as a convex ",
-                       "combination between the two. The empirical estimate ",
-                       "is based on model assumption and the 1-step estimator ",
-                       "corrects the bias introduced by the ",
-                       "model assumption asymptotically. Note: The true ATE ",
+                 paste("Figure showing the ATE as a function of the",
+                       "parametrized path (solid), the 1-step estimator",
+                       "(dashed), and the empirical estimate (rightmost",
+                       "point(s)). The path is a path the DGP space",
+                       "from the empirical DGP to the true DGP as a convex",
+                       "combination between the two. The empirical estimate",
+                       "is based on model assumption and the 1-step estimator",
+                       "corrects the bias introduced by the",
+                       "model assumption asymptotically. Note: The true ATE",
                        "is calculated on the covariate range, [-6, 6].")
                ),
            ),
@@ -34,7 +34,7 @@ body <- dashboardBody(
                plotOutput("dataPlot"),
                p(
                  class = "text-muted",
-                 paste("Figure showing the generated sample (points), the ", 
+                 paste("Figure showing the generated sample (points), the", 
                  "true DGP (solid line), and the estimated DGP (dashed line).")
                ),
            )
@@ -60,8 +60,8 @@ body <- dashboardBody(
                             inline = FALSE),
                p(
                  class = "text-muted",
-                 paste("Select the underlying data generating process (DGP). ",
-                 "You can visualize the DGP as the 'True' curve in the 'DGPs ",
+                 paste("Select the underlying data generating process (DGP).",
+                 "You can visualize the DGP as the 'True' curve in the 'DGPs",
                  "and Sample' figure.")
                ),
                
@@ -74,7 +74,7 @@ body <- dashboardBody(
                            min = 0.1, max = 1, value = 0.5, step = 0.1),
                p(
                  class = "text-muted",
-                 paste("Increase or decrease the variance in the treated and ",
+                 paste("Increase or decrease the variance in the treated and",
                  "control population.")
                ),
            ),
@@ -89,8 +89,8 @@ body <- dashboardBody(
                
                p(
                  class = "text-muted",
-                 paste("Select the model(s) to use in estimation of M0 and M1. ",
-                 "You can visualize the estimation in the 'DGPs and Sample' ",
+                 paste("Select the model(s) to use in estimation of M0 and M1.",
+                 "You can visualize the estimation in the 'DGPs and Sample'",
                  "figure.")
                ),
                
@@ -113,8 +113,27 @@ body <- dashboardBody(
   )
 )
 
-dashboardPage(
-  header,
-  dashboardSidebar(disable = T),
-  body
+footer_text <- p("Filip Edström and Amin Ghasempour, ", 
+                 a(href="https://www.stat4reg.se/home", "Stat4Reg"), 
+                 ", Umeå University, 2022.", "For more information, feedback and contact please visit ",
+                 a(href="https://github.com/fileds/ate-1-step-estimator", "GitHub/fileds")) 
+  
+
+ui <- tagList(
+  dashboardPage(
+    header,
+    dashboardSidebar(disable = T),
+    body),
+  tags$footer(p(footer_text), 
+              align = "center", 
+              style = "
+                position:relative;
+                text-align: center;
+                bottom:0;
+                width:100%;
+                height:50px;   /* Height of the footer */
+                color: #666;
+                padding: 10px;
+                background-color: #ECF0F5;
+                z-index: 1000;")
 )
