@@ -1,3 +1,9 @@
+# shinyapps.io 
+rsconnect
+
+# R project
+*.Rproj
+
 # History files
 .Rhistory
 .Rapp.history
