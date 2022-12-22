@@ -128,7 +128,7 @@ if_plot <- function(estimators, input)
       mapping = aes(x = x, y = y, label = type),
       size = 8,
       nudge_y = diff(range(df$ate)) / 6,
-      xlim = c(0.1, 0.9),
+      xlim = c(0.05, 0.95),
       segment.size  = 0.2,
       segment.color = "grey50",
       inherit.aes = FALSE) +

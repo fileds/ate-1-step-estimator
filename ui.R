@@ -30,8 +30,6 @@ body <- dashboardBody(
                ),
            ),
                
-           hr(),
-               
            box(width = NULL, title = "DGPs and Sample", status = "primary",
                plotOutput("dataPlot"),
                p(
