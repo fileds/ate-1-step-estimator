@@ -113,7 +113,7 @@ body <- dashboardBody(
   )
 )
 
-footer_text <- p("Filip Edström and Amin Ghasempour, ", 
+footer_text <- p("Filip Edström and Mohammad Ghasempour, ", 
                  a(href="https://www.stat4reg.se/home", "Stat4Reg"), 
                  ", Umeå University, 2022.", "For more information, feedback and contact please visit ",
                  a(href="https://github.com/fileds/ate-1-step-estimator", "GitHub/fileds")) 
