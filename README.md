@@ -1,4 +1,4 @@
-# ate-1-step-estimator
+# 1-step estimator for the Average Treatment Effect (ATE)
 R Shiny app for visualisation of the 1-step estimator for the Average Treatment Effect (ATE). Before using the app it is *strongly recommended* that you read the two excellent papers
 
 * Visually Communicating and Teaching Intuition for Influence Functions by Fisher and Kennedy (https://arxiv.org/abs/1810.03260)
