@@ -98,7 +98,7 @@ estimate_quadratic <- function(df)
   return(list(m0 = m0, m1 = m1, propensity_score = propensity_score))
 }
 
-estimate_kernel <- function(df, bw = 0.5)
+estimate_kernel <- function(df, bw)
 {
   # Select x, y for treated and control
   x0 <- unlist(select(filter(df, tr == 0), x))

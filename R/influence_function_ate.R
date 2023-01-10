@@ -1,27 +1,25 @@
-influence_function_ate <- function(sample, estimated){
+influence_function_ate <- function(df, estimated){
   # Covariate
-  x <- sample$df$x
+  x <- df$x
   # Treatment assignment
-  tr <- sample$df$tr
+  tr <- as.logical(df$tr)
   # Observed outcome
-  y <- sample$df$y
+  y <- df$y
   # m0 estimated values
-  m0_hat <- estimated$m0(x)
+  m0 <- estimated$m0
   # m1 estimated values
-  m1_hat <- estimated$m1(x)
+  m1 <- estimated$m1
   # Propensity score values
-  propensity_score <- estimated$propensity_score(x)
+  ps <- estimated$propensity_score
   
-  # Influence function
-  # TODO: Rewrite without ifelse function. It is confusing
-  if_ate = mean(
-    ifelse(tr,
-           (y -  m1_hat) / propensity_score,
-           - (y - m0_hat)/(1 - propensity_score))
-    + m1_hat - m0_hat
-    )
+  # Efficient influence function
+  eif = mean(
+    tr * (y -  m1(x)) / ps(x) 
+    - (1 - tr) * (y - m0(x))/(1 - ps(x))
+    + m1(x) - m0(x)
+  )
   
-  return(if_ate)
+  return(eif)
 }
 
 one_step_ate <- function(sample, dgps, ate)
@@ -32,7 +30,7 @@ one_step_ate <- function(sample, dgps, ate)
   for (model in names(dgps$estimated))
   {
     # Calculate influence function
-    influence_function <- influence_function_ate(sample, dgps$estimated[[model]])
+    influence_function <- influence_function_ate(sample$df, dgps$estimated[[model]])
     
     # Get the empirical estimate
     ate_empirical <- tail(ate[[model]], 1)

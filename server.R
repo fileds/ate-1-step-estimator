@@ -75,6 +75,19 @@ server <- function(input, output) {
     removeModal()
   })
   
+  # Update model
+  observeEvent(input$updateTargeted, {
+    req(observations$df)
+    showModal(modalDialog(
+      "Calculating ATE and influence functions...", 
+      footer=NULL))
+    
+    # Set the estimated DGP
+    set_estimated_dgp()    
+    
+    removeModal()
+  })
+  
   # Plotting
   ## Data plot
   output$dataPlot <- renderPlot({

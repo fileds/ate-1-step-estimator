@@ -97,15 +97,18 @@ body <- dashboardBody(
                  ),
                  
                  column(6,
-                 radioButtons('targetedBase', 'Targeted base',
-                                    choiceNames = c("Linear",
-                                                    "2nd deg. polynomial",
-                                                    "Kernel"),
-                                    choiceValues = c("Linear",
-                                                     "Quadratic",
-                                                     "Kernel"),
-                              selected = "Linear", 
-                              inline = FALSE),
+                   radioButtons('targetedBase', 'Targeted base',
+                                      choiceNames = c("Linear",
+                                                      "2nd deg. polynomial",
+                                                      "Kernel"),
+                                      choiceValues = c("Linear",
+                                                       "Quadratic",
+                                                       "Kernel"),
+                                selected = "Linear", 
+                                inline = FALSE),
+                     
+                     actionButton(inputId = "updateTargeted", 
+                                  label = "Update Targeted")
                  )
                ),
                
