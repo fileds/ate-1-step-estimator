@@ -47,7 +47,8 @@ data_plot <- function(sample, dgps, input)
     "True" = "solid",
     "Linear" = "dashed",
     "Quadratic" = "longdash",
-    "Kernel" = "dotdash")
+    "Kernel" = "dotdash",
+    "Targeted" = "dotdash")
   
   # Sample data frame
   df_sample <- sample$df %>%
@@ -88,7 +89,8 @@ if_plot <- function(estimators, input)
   pal <- list(
     "Linear" = tableau20[1],
     "Kernel" = tableau20[14],
-    "Quadratic" = tableau20[3])
+    "Quadratic" = tableau20[3],
+    "Targeted" = tableau20[9])
   
   # Filter checked model types
   df <- estimators$df %>%

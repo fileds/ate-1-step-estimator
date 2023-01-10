@@ -41,8 +41,8 @@ body <- dashboardBody(
     ),
     column(width = 3,
            box(width = NULL, status = "warning", title = "Generate Sample",
-               sliderInput("sampleSize", "Sample size", min = 40, max = 1000, 
-                       value = 100, step = 10),
+               sliderInput("observationsSize", "Sample size", min = 40, 
+                           max = 1000, value = 100, step = 10),
                
                hr(),
                
@@ -67,29 +67,47 @@ body <- dashboardBody(
                
                hr(),
                
-               sliderInput("varianceControl", "Variance of error of M0", 
+               sliderInput("stdControl", "Standard deviation of error of M0", 
                            min = 0.1, max = 1, value = 0.5, step = 0.1),
                
-               sliderInput("varianceTreated", "Variance of error of M1", 
+               sliderInput("stdTreated", "Standard deviation of error of M1", 
                            min = 0.1, max = 1, value = 0.5, step = 0.1),
                p(
                  class = "text-muted",
-                 paste("Increase or decrease the variance in the treated and",
-                 "control population.")
+                 paste("Increase or decrease the standard deviation in the ",
+                 "treated and control population.")
                ),
            ),
            box(width = NULL, status = "warning", title = "Model",
-               checkboxGroupInput('modelTypes', 'Model',
-                                  choiceNames = c("True",
-                                                  "Linear",
-                                                  "2nd deg. polynomial",
-                                                  "Kernel"),
-                                  choiceValues = c("True",
-                                                   "Linear",
-                                                   "Quadratic",
-                                                   "Kernel"),
-                            selected = c("True", "Linear"), 
-                            inline = FALSE),
+               fluidRow(
+                 column(6, 
+                 checkboxGroupInput('modelTypes', 'Model',
+                                    choiceNames = c("True",
+                                                    "Linear",
+                                                    "2nd deg. polynomial",
+                                                    "Kernel",
+                                                    "Targeted"),
+                                    choiceValues = c("True",
+                                                     "Linear",
+                                                     "Quadratic",
+                                                     "Kernel",
+                                                     "Targeted"),
+                              selected = c("True", "Linear"), 
+                              inline = FALSE),
+                 ),
+                 
+                 column(6,
+                 radioButtons('targetedBase', 'Targeted base',
+                                    choiceNames = c("Linear",
+                                                    "2nd deg. polynomial",
+                                                    "Kernel"),
+                                    choiceValues = c("Linear",
+                                                     "Quadratic",
+                                                     "Kernel"),
+                              selected = "Linear", 
+                              inline = FALSE),
+                 )
+               ),
                
                p(
                  class = "text-muted",
@@ -117,27 +135,27 @@ body <- dashboardBody(
   )
 )
 
-footer_text <- p("Filip Edström and Mohammad Ghasempour, ", 
-                 a(href="https://www.stat4reg.se/home", "Stat4Reg"), 
-                 ", Umeå University, 2022.", "For more information, feedback and contact please visit ",
-                 a(href="https://github.com/fileds/ate-1-step-estimator", "GitHub/fileds")) 
+#footer_text <- p("Filip Edström and Mohammad Ghasempour, ", 
+#                 a(href="https://www.stat4reg.se/home", "Stat4Reg"), 
+#                 ", Umeå University, 2022.", "For more information, feedback and contact please visit ",
+#                 a(href="https://github.com/fileds/ate-1-step-estimator", "GitHub/fileds")) 
   
 
 ui <- tagList(
   dashboardPage(
     header,
     dashboardSidebar(disable = T),
-    body),
-  tags$footer(p(footer_text), 
-              align = "center", 
-              style = "
-                position:relative;
-                text-align: center;
-                bottom:0;
-                width:100%;
-                height:50px;   /* Height of the footer */
-                color: #666;
-                padding: 10px;
-                background-color: #ECF0F5;
-                z-index: 1000;")
+    body)
+  #tags$footer(p(footer_text), 
+  #            align = "center", 
+  #            style = "
+  #              position:relative;
+  #              text-align: center;
+  #              bottom:0;
+  #              width:100%;
+  #              height:50px;   /* Height of the footer */
+  #              color: #666;
+  #              padding: 10px;
+  #              background-color: #ECF0F5;
+  #              z-index: 1000;")
 )

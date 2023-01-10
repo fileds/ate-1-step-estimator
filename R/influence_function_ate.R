@@ -13,6 +13,7 @@ influence_function_ate <- function(sample, estimated){
   propensity_score <- estimated$propensity_score(x)
   
   # Influence function
+  # TODO: Rewrite without ifelse function. It is confusing
   if_ate = mean(
     ifelse(tr,
            (y -  m1_hat) / propensity_score,

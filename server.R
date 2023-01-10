@@ -3,6 +3,7 @@ library(shiny)
 source("R/dgps.R")
 source("R/estimate_ate_along_path.R")
 source("R/influence_function_ate.R")
+source("R/targeted_learning.R")
 source("R/plots.R")
 
 server <- function(input, output) {
@@ -13,7 +14,7 @@ server <- function(input, output) {
                          df = NULL)
   
   ## Data
-  sample <- reactiveValues(df = NULL,
+  observations <- reactiveValues(df = NULL,
                            eps = seq(0, 1, by = 0.001))
   
   ## Estimators
@@ -23,32 +24,37 @@ server <- function(input, output) {
   
   # TODO: Rename this function
   set_estimated_dgp <- reactive({
-    req(sample$df)
+    req(observations$df)
     
     # Estimating m0, m1, and propensity score
-    dgps$estimated <- estimate_dgps(sample, input)
+    dgps$estimated <- estimate_dgps(observations, input)
     
-    # Estimate the DGPs in the range of the sample
-    dgps$df <- calculate_dgp_values(sample, dgps)
+    # Get targeted density
+    dgps$estimated[["Targeted"]] <- targeted_learning(observations$df, 
+        dgps$estimated[[input$targetedBase]])
+    
+    # Estimate the DGPs in the range of the observations
+    dgps$df <- calculate_dgp_values(observations, dgps)
     
     # Calculating ATE along parametrized path
-    ate <- estimate_ate_along_path(sample, dgps)
+    ate <- estimate_ate_along_path(observations, dgps)
     
     # Create data frame for estimators along path and one step estimators.
-    estimators$df <- one_step_ate(sample, dgps, ate)
+    estimators$df <- one_step_ate(observations, dgps, ate)
   })
   
-  # Generate sample, calculate estimator and influence functions
+  # Generate observations, calculate estimator and influence functions
   observeEvent(input$generateButton, {
     showModal(modalDialog(
-      "Generating sample, calculating ATE and influence functions...", 
+      "Generating observations, calculating ATE and influence functions...", 
       footer=NULL))
     
+    print(1)
     # Define DGP according to input
     dgps$true <- define_dgp(input)
     
-    # Generating sample
-    sample$df <- dgps$true$random_generator(input$sampleSize)
+    # Generating observations
+    observations$df <- dgps$true$random_generator(input$observationsSize)
     
     # Set the estimated DGP
     set_estimated_dgp()    
@@ -58,7 +64,7 @@ server <- function(input, output) {
   
   # Update model
   observeEvent(input$updateBandwidth, {
-    req(sample$df)
+    req(observations$df)
     showModal(modalDialog(
       "Calculating ATE and influence functions...", 
       footer=NULL))
@@ -72,8 +78,8 @@ server <- function(input, output) {
   # Plotting
   ## Data plot
   output$dataPlot <- renderPlot({
-    req(sample$df)
-    data_plot(sample, dgps, input)
+    req(observations$df)
+    data_plot(observations, dgps, input)
   })
   
   ## IF plot

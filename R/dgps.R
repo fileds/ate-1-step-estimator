@@ -4,10 +4,10 @@ define_dgp <- function(input)
 {
   # The selected DGP type
   dgp_type <- input$dgpType
-  # Treated noise variance
-  variance_treated <- force(input$varianceTreated)
-  # Control noise variance
-  variance_control <- force(input$varianceControl)
+  # Treated noise std
+  std_treated <- force(input$stdTreated)
+  # Control noise std
+  std_control <- force(input$stdControl)
   
   # Define density
   # TODO: Change dgp type to strings.
@@ -31,8 +31,8 @@ define_dgp <- function(input)
   random_generator <- function(n)
   {
     # Noise
-    e0 = rnorm(n, 0, variance_control)
-    e1 = rnorm(n, 0, variance_treated)
+    e0 = rnorm(n, 0, std_control)
+    e1 = rnorm(n, 0, std_treated)
     
     # Covariate
     x = runif(n, -6, 6)
