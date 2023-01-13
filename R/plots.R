@@ -91,7 +91,9 @@ if_plot <- function(estimators, input)
     "Kernel" = tableau20[14],
     "Quadratic" = tableau20[3],
     "Targeted" = tableau20[9],
-    "Iterated" = tableau20[16])
+    "Targeted2" = tableau20[16],
+    "Targeted10" = tableau20[15],
+    "Targeted100" = tableau20[16])
   
   # Filter checked model types
   df <- estimators$df %>%

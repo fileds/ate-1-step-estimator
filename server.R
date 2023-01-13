@@ -33,6 +33,35 @@ server <- function(input, output) {
     dgps$estimated[["Targeted"]] <- targeted_learning(observations$df, 
         dgps$estimated[[input$targetedBase]])
     
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted2"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 2)
+    #
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted3"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 3)
+    #
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted4"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 4)
+    #
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted5"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 5)
+    #
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted10"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 10)
+    #
+    ## Get iterated targeted density
+    #dgps$estimated[["Targeted20"]] <- iterated_targeted_learning(observations$df, 
+    #    dgps$estimated[[input$targetedBase]], 20)
+    
+    # Get iterated targeted density
+    dgps$estimated[["Targeted100"]] <- iterated_targeted_learning(observations$df, 
+        dgps$estimated[[input$targetedBase]], input$targetedBase, 100)
+    
+    
     # Estimate the DGPs in the range of the observations
     dgps$df <- calculate_dgp_values(observations, dgps)
     
@@ -49,7 +78,6 @@ server <- function(input, output) {
       "Generating observations, calculating ATE and influence functions...", 
       footer=NULL))
     
-    print(1)
     # Define DGP according to input
     dgps$true <- define_dgp(input)
     

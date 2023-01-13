@@ -30,7 +30,10 @@ one_step_ate <- function(sample, dgps, ate)
   for (model in names(dgps$estimated))
   {
     # Calculate influence function
-    influence_function <- influence_function_ate(sample$df, dgps$estimated[[model]])
+    if (model == "Targeted100")
+      influence_function <- influence_function_ate(dgps$estimated[[model]]$df, dgps$estimated[[model]])
+    else
+      influence_function <- influence_function_ate(sample$df, dgps$estimated[[model]])
     
     # Get the empirical estimate
     ate_empirical <- tail(ate[[model]], 1)

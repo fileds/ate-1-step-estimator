@@ -12,6 +12,7 @@ estimate_ate_along_path <- function(sample, dgps) {
   ate_along_paths <- list()
   for (model in names(dgps$estimated))
   {
+    print(model)
     # m0 estimated
     m0_hat <- dgps$estimated[[model]]$m0
     # m1 estimated
